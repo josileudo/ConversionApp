@@ -9,16 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var inputValue: Double = 0
-    @State private var tipTemperature = ["Celsius", "Fahrenheit", "Kelvin"]
-    @State private var tipLenght = [
-        "meters",
-        "kilometers",
-        "feet",
-        "yards",
-        "miles"
-    ]
-    @State private var tipTime = ["seconds", "minutes", "hours", "days"]
-    @State private var tipVolume = ["milliliters", "liters", "cups", "pints", "gallons"]
+    @State private var tipLenght = ["meters", "kilometers", "feet", "yards", "miles"]
     
     @State private var inputLenghtSelect = "meters"
     @State private var outputLenghtSelect = "kilometers"
