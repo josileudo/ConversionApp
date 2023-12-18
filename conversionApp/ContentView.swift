@@ -8,22 +8,44 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var inputValue = 0
+    @State private var inputValue: Double = 0
     @State private var tipTemperature = ["Celsius", "Fahrenheit", "Kelvin"]
-    @State private var tipLenght = ["meters", "kilometers", "feet", "yards", "miles"]
+    @State private var tipLenght = [
+        "meters",
+        "kilometers",
+        "feet",
+        "yards",
+        "miles"
+    ]
     @State private var tipTime = ["seconds", "minutes", "hours", "days"]
     @State private var tipVolume = ["milliliters", "liters", "cups", "pints", "gallons"]
     
-    @State private var inputLenghtSelect = ""
-    @State private var outputLenghtSelect = ""
+    @State private var inputLenghtSelect = "meters"
+    @State private var outputLenghtSelect = "kilometers"
     
-//    func convertLenght() -> Double {
-//        switch inputLenghtSelect {
-//        case "meters":
-//            return
-//        
-//        return 0
-//    }
+    // MARK: Return unit lenght
+    func typeMeasurement(type: String) -> UnitLength {
+        switch (type) {
+        case "kilometers":
+            return .kilometers
+        case "feet":
+            return .feet
+        case "yards":
+            return .yards
+        case "miles":
+            return .miles
+        default:
+            return .meters
+        }
+    }
+    
+    // MARK: Conversion value
+    func resultConversion() -> Measurement<UnitLength> {
+        let input = Measurement(value: inputValue, unit: typeMeasurement(type: inputLenghtSelect))
+        let output = typeMeasurement(type: outputLenghtSelect)
+        
+        return input.converted(to: output)
+    }
     
     var body: some View {
         NavigationStack {
@@ -43,6 +65,7 @@ struct ContentView: View {
                     .pickerStyle(.segmented)
                 }
                 
+                // MARK: Output convesion
                 Section("Output") {
                     Picker("Output light", selection: $outputLenghtSelect) {
                         ForEach(tipLenght, id: \.self) {
@@ -54,7 +77,7 @@ struct ContentView: View {
                 
                 // MARK: Result
                 Section("Result") {
-                    Text("\(inputValue)")
+                    Text("\(resultConversion().value.formatted())")
                 }
             }
         }
